@@ -1,8 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Plus, Pencil, Copy } from 'lucide-react'
 import { useOperationPlanStore } from '@/store/operationPlanStore'
 import { usePositionStore } from '@/store/positionStore'
+import { useWatchlistStore } from '@/store/stockStore'
+import { getStockRealtime } from '@/lib/api/stock'
 import { formatPrice, formatTime } from '@/lib/utils/format'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -16,16 +19,22 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
+import { OperationPlanDialog, type StockSelectItem } from '@/components/operation-plan'
 import type { OperationPlan } from '@/types/operationPlan'
+import type { CreateOperationPlanParams } from '@/hooks/useOperationPlanForm'
 
 function PlanCard({
   plan,
   onExecute,
   onCancel,
+  onEdit,
+  onCopy,
 }: {
   plan: OperationPlan
   onExecute?: (plan: OperationPlan) => void
   onCancel?: (plan: OperationPlan) => void
+  onEdit?: (plan: OperationPlan) => void
+  onCopy?: (plan: OperationPlan) => void
 }) {
   const isBuy = plan.type === 'buy'
 
@@ -71,11 +80,19 @@ function PlanCard({
         </div>
       </div>
 
-      <div className="mt-4 flex gap-2">
+      <div className="mt-4 flex flex-wrap gap-2">
         <Button size="sm" onClick={() => onExecute?.(plan)}>
           已执行
         </Button>
-        <Button size="sm" variant="outline" onClick={() => onCancel?.(plan)}>
+        <Button size="sm" variant="outline" onClick={() => onEdit?.(plan)}>
+          <Pencil className="mr-1 h-3 w-3" />
+          编辑
+        </Button>
+        <Button size="sm" variant="outline" onClick={() => onCopy?.(plan)}>
+          <Copy className="mr-1 h-3 w-3" />
+          复制
+        </Button>
+        <Button size="sm" variant="ghost" onClick={() => onCancel?.(plan)}>
           取消
         </Button>
       </div>
@@ -84,7 +101,7 @@ function PlanCard({
 }
 
 export default function PlansPage() {
-  const { plans, history, markAsExecuted, cancelPlan } = useOperationPlanStore()
+  const { plans, history, addPlan, updatePlan, markAsExecuted, cancelPlan } = useOperationPlanStore()
   const { positions, addPosition, updatePosition, removePosition, updatePrice } = usePositionStore()
   const [feedback, setFeedback] = useState<string | null>(null)
 
@@ -93,6 +110,53 @@ export default function PlansPage() {
   const [executingPlan, setExecutingPlan] = useState<OperationPlan | null>(null)
   const [inputPrice, setInputPrice] = useState<string>('')
   const [priceError, setPriceError] = useState<string>('')
+
+  // 操作计划对话框状态
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [dialogMode, setDialogMode] = useState<'create' | 'edit' | 'copy'>('create')
+  const [selectedPlan, setSelectedPlan] = useState<OperationPlan | null>(null)
+  const [availableStocks, setAvailableStocks] = useState<StockSelectItem[]>([])
+
+  // 获取可选股票列表（自选股 + 持仓）
+  const watchlistCodes = useWatchlistStore((state) => state.stocks)
+
+  // 合并自选股和持仓
+  useEffect(() => {
+    const fetchStocks = async () => {
+      const codes = new Set([...watchlistCodes, ...positions.map((p) => p.stockCode)])
+      if (codes.size === 0) {
+        setAvailableStocks([])
+        return
+      }
+
+      try {
+        const stocks = await getStockRealtime(Array.from(codes))
+        setAvailableStocks(
+          stocks.map((s) => ({
+            code: s.code,
+            name: s.name,
+            market: s.market,
+            price: s.price,
+            changePercent: s.changePercent,
+          }))
+        )
+      } catch (error) {
+        console.error('Failed to fetch stocks for dialog:', error)
+        // 使用持仓数据作为备选
+        setAvailableStocks(
+          positions.map((p) => ({
+            code: p.stockCode,
+            name: p.stockName,
+            market: 'SZ' as const,
+            price: p.currentPrice,
+            changePercent: 0,
+          }))
+        )
+      }
+    }
+
+    fetchStocks()
+  }, [watchlistCodes, positions])
 
   const pendingPlans = plans.filter((p) => p.status === 'pending')
   const todayHistory = history.filter((h) => {
@@ -179,11 +243,46 @@ export default function PlansPage() {
     setExecutingPlan(null)
   }
 
+  const handleOpenCreateDialog = () => {
+    setDialogMode('create')
+    setSelectedPlan(null)
+    setDialogOpen(true)
+  }
+
+  const handleOpenEditDialog = (plan: OperationPlan) => {
+    setDialogMode('edit')
+    setSelectedPlan(plan)
+    setDialogOpen(true)
+  }
+
+  const handleOpenCopyDialog = (plan: OperationPlan) => {
+    setDialogMode('copy')
+    setSelectedPlan(plan)
+    setDialogOpen(true)
+  }
+
+  const handleDialogSubmit = (data: CreateOperationPlanParams) => {
+    if (dialogMode === 'edit' && selectedPlan) {
+      updatePlan(selectedPlan.id, data)
+      setFeedback(`${data.stockName} 计划已更新`)
+    } else {
+      addPlan(data)
+      setFeedback(`${data.stockName} 已加入${data.type === 'buy' ? '买入' : '卖出'}计划`)
+    }
+  }
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="page-title">操作计划</h1>
-        <p className="page-description">管理待执行的操作计划</p>
+      <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+        <div>
+          <h1 className="page-title">操作计划</h1>
+          <p className="page-description">管理待执行的操作计划</p>
+        </div>
+
+        <Button onClick={handleOpenCreateDialog}>
+          <Plus className="mr-2 h-4 w-4" />
+          新建计划
+        </Button>
       </div>
 
       {feedback && (
@@ -209,6 +308,8 @@ export default function PlansPage() {
                   plan={plan}
                   onExecute={handleExecutePlan}
                   onCancel={(p) => cancelPlan(p.id)}
+                  onEdit={handleOpenEditDialog}
+                  onCopy={handleOpenCopyDialog}
                 />
               ))}
             </div>
@@ -274,6 +375,17 @@ export default function PlansPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* 操作计划对话框 */}
+      <OperationPlanDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        mode={dialogMode}
+        plan={selectedPlan ?? undefined}
+        positions={positions}
+        stocks={availableStocks}
+        onSubmit={handleDialogSubmit}
+      />
     </div>
   )
 }
