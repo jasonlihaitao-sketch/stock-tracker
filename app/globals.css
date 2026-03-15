@@ -1,0 +1,459 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* 亮色模式 - 金融蓝主题 */
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222.2 47.4% 11.2%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+    --primary: 221.2 83% 53%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83% 53%;
+    --radius: 0.625rem;
+
+    /* 股市专用色 - 中国A股标准色 */
+    --stock-up: 0 62% 50%;
+    --stock-down: 145 63% 42%;
+    --stock-flat: 215 16% 47%;
+
+    /* 新增视觉增强变量 */
+    --gradient-primary: linear-gradient(135deg, hsl(221.2 83% 53%) 0%, hsl(217.2 91% 60%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 40% 98%) 100%);
+    --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.08);
+    --shadow-card-hover: 0 4px 12px -2px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.08);
+    --shadow-elevated: 0 10px 40px -10px rgb(0 0 0 / 0.15);
+
+    /* 分类颜色 - 用于扫描结果标签 */
+    --category-technical: 217 91% 60%;
+    --category-fundamental: 142 76% 36%;
+    --category-growth: 262 83% 58%;
+    --category-quality: 38 92% 50%;
+    --category-reversal: 25 95% 53%;
+    --category-event: 330 81% 60%;
+  }
+
+  /* 暗色模式 - 数据仪表盘主题 */
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 7%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 7%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91% 60%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 142 76% 36%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 20%;
+    --input: 217.2 32.6% 20%;
+    --ring: 217.2 91% 60%;
+
+    /* 股市专用色 - 暗色模式 */
+    --stock-up: 0 72% 55%;
+    --stock-down: 145 63% 42%;
+    --stock-flat: 215 20% 65%;
+
+    /* 暗色模式视觉增强 */
+    --gradient-primary: linear-gradient(135deg, hsl(217.2 91% 60%) 0%, hsl(262 83% 58%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(222.2 84% 8%) 0%, hsl(222.2 84% 6%) 100%);
+    --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+    --shadow-card-hover: 0 4px 12px -2px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+    --shadow-elevated: 0 10px 40px -10px rgb(0 0 0 / 0.5);
+
+    /* 分类颜色 - 暗色模式 */
+    --category-technical: 217 91% 65%;
+    --category-fundamental: 142 76% 45%;
+    --category-growth: 262 83% 65%;
+    --category-quality: 38 92% 55%;
+    --category-reversal: 25 95% 58%;
+    --category-event: 330 81% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* 等宽数字 */
+  .font-mono {
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* 数字等宽 */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 页面进入动画 */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* 动画工具类 */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.3s ease-out forwards;
+  }
+
+  .animate-pulse-soft {
+    animation: pulse-soft 2s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(var(--muted)) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  /* 交错动画延迟 */
+  .stagger-1 { animation-delay: 50ms; }
+  .stagger-2 { animation-delay: 100ms; }
+  .stagger-3 { animation-delay: 150ms; }
+  .stagger-4 { animation-delay: 200ms; }
+  .stagger-5 { animation-delay: 250ms; }
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/20 rounded-full;
+  transition: background-color 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/40;
+}
+
+/* Firefox 滚动条 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted-foreground) / 0.2) transparent;
+}
+
+/* 表格行高亮 */
+.table-row-hover {
+  @apply transition-colors duration-150;
+}
+
+.table-row-hover:hover {
+  @apply bg-muted/50;
+}
+
+/* 卡片基础样式 */
+.card-base {
+  @apply rounded-xl border bg-card;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card-base:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* 卡片悬停效果 */
+.card-hover {
+  @apply transition-all duration-200 cursor-pointer;
+}
+
+.card-hover:hover {
+  @apply shadow-lg border-primary/30;
+  transform: translateY(-2px);
+}
+
+/* 卡片发光效果 - 用于强调 */
+.card-glow {
+  position: relative;
+}
+
+.card-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--gradient-primary);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card-glow:hover::before {
+  opacity: 0.5;
+}
+
+/* 数值颜色 - 增强版 */
+.text-up {
+  color: hsl(var(--stock-up));
+}
+
+.text-down {
+  color: hsl(var(--stock-down));
+}
+
+.text-flat {
+  color: hsl(var(--stock-flat));
+}
+
+/* 背景色 - 增强版 */
+.bg-up {
+  background-color: hsl(var(--stock-up));
+}
+
+.bg-down {
+  background-color: hsl(var(--stock-down));
+}
+
+.bg-up\/10 {
+  background-color: hsl(var(--stock-up) / 0.1);
+}
+
+.bg-down\/10 {
+  background-color: hsl(var(--stock-down) / 0.1);
+}
+
+/* 渐变文字 */
+.text-gradient {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 侧边栏样式 */
+.sidebar-item {
+  @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground;
+  @apply transition-all duration-200;
+  position: relative;
+}
+
+.sidebar-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  background: var(--gradient-primary);
+  border-radius: 0 2px 2px 0;
+  transition: height 0.2s ease;
+}
+
+.sidebar-item:hover {
+  @apply bg-muted/80 text-foreground;
+}
+
+.sidebar-item:hover::before {
+  height: 60%;
+}
+
+.sidebar-item.active {
+  @apply bg-primary/10 text-primary font-medium;
+}
+
+.sidebar-item.active::before {
+  height: 70%;
+}
+
+/* 数据卡片 - 增强版 */
+.data-card {
+  @apply rounded-xl border bg-card p-4;
+  box-shadow: var(--shadow-card);
+  transition: all 0.25s ease;
+}
+
+.data-card:hover {
+  box-shadow: var(--shadow-card-hover);
+  @apply border-primary/20;
+}
+
+/* KPI 卡片 - 增强版 */
+.kpi-card {
+  @apply rounded-xl border bg-card p-4 relative overflow-hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.kpi-card:hover::before {
+  opacity: 1;
+}
+
+.kpi-value {
+  @apply text-2xl font-bold tabular-nums tracking-tight;
+}
+
+.kpi-label {
+  @apply text-sm text-muted-foreground font-medium;
+}
+
+.kpi-change {
+  @apply text-sm font-semibold tabular-nums;
+}
+
+/* 页面标题样式 */
+.page-title {
+  @apply text-2xl font-bold tracking-tight;
+}
+
+.page-description {
+  @apply mt-1 text-muted-foreground;
+}
+
+/* 按钮增强 */
+.btn-enhanced {
+  @apply relative overflow-hidden;
+  transition: all 0.2s ease;
+}
+
+.btn-enhanced::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.btn-enhanced:hover::after {
+  opacity: 1;
+}
+
+/* 输入框聚焦增强 */
+.input-enhanced:focus {
+  @apply ring-2 ring-primary/20 border-primary;
+  box-shadow: 0 0 0 4px hsl(var(--primary) / 0.1);
+}
+
+/* 骨架屏增强 */
+.skeleton {
+  @apply animate-pulse rounded bg-muted;
+}
+
+.skeleton-text {
+  @apply h-4 w-24 rounded;
+}
+
+.skeleton-title {
+  @apply h-6 w-40 rounded;
+}
+
+.skeleton-card {
+  @apply h-32 w-full rounded-xl;
+}
+
+/* 减少动画偏好支持 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-slide-in-right,
+  .animate-pulse-soft,
+  .animate-shimmer {
+    animation: none !important;
+  }
+}

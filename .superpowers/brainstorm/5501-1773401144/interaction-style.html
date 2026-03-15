@@ -1,0 +1,100 @@
+<h2>选择交互动效风格</h2>
+<p class="subtitle">你选择了极简数据风格，现在决定交互如何"动"起来</p>
+
+<div class="cards">
+  <!-- 动效A: 轻柔过渡 -->
+  <div class="card" data-choice="gentle" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #f8fafc; padding: 20px; min-height: 220px;">
+      <div style="background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 12px; transition: all 0.3s ease;">
+        <div style="color: #64748b; font-size: 12px;">信号卡片</div>
+        <div style="color: #0f172a; font-size: 18px; font-weight: 600;">点击我试试</div>
+      </div>
+      <div style="background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: translateY(-2px);">
+        <div style="color: #64748b; font-size: 12px;">悬停效果</div>
+        <div style="color: #0f172a; font-size: 18px; font-weight: 600;">轻微上浮</div>
+      </div>
+      <div style="margin-top: 12px; padding: 12px; background: #e0f2fe; border-radius: 8px; border-left: 3px solid #0ea5e9;">
+        <div style="color: #0369a1; font-size: 13px;">
+          ✓ 300ms 平滑过渡<br>
+          ✓ 微妙阴影变化<br>
+          ✓ 自然不突兀
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A. 轻柔过渡</h3>
+      <p>温和自然的过渡效果，悬停时轻微上浮+阴影加深，点击有柔和反馈</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>优点</h4><ul><li>自然舒适</li><li>不分散注意力</li><li>性能好</li></ul></div>
+        <div class="cons"><h4>缺点</h4><ul><li>不够炫酷</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 动效B: 弹性反馈 -->
+  <div class="card" data-choice="bouncy" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #f8fafc; padding: 20px; min-height: 220px;">
+      <div style="background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 12px;">
+        <div style="color: #64748b; font-size: 12px;">信号卡片</div>
+        <div style="color: #0f172a; font-size: 18px; font-weight: 600;">点击试试</div>
+      </div>
+      <div style="background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: scale(0.97);">
+        <div style="color: #64748b; font-size: 12px;">点击效果</div>
+        <div style="color: #0f172a; font-size: 18px; font-weight: 600;">弹性缩放</div>
+      </div>
+      <div style="margin-top: 12px; padding: 12px; background: #fef3c7; border-radius: 8px; border-left: 3px solid #f59e0b;">
+        <div style="color: #92400e; font-size: 13px;">
+          ✓ 弹性缩放 (0.97→1.03→1)<br>
+          ✓ 类似iOS触感<br>
+          ✓ 活泼有趣
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B. 弹性反馈</h3>
+      <p>点击时有弹性缩放效果，类似iOS的触感反馈，活泼且满足感强</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>优点</h4><ul><li>交互感强</li><li>活泼有趣</li><li>操作确认感</li></ul></div>
+        <div class="cons"><h4>缺点</h4><ul><li>可能略夸张</li><li>需控制幅度</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 动效C: 数据流动 -->
+  <div class="card" data-choice="data-flow" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #f8fafc; padding: 20px; min-height: 220px;">
+      <div style="background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 12px; overflow: hidden;">
+        <div style="color: #64748b; font-size: 12px;">实时数据</div>
+        <div style="color: #0f172a; font-size: 18px; font-weight: 600;">价格 <span style="color: #16a34a; font-size: 14px;">↑ +2.35%</span></div>
+      </div>
+      <div style="background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden;">
+        <div style="color: #64748b; font-size: 12px;">数据更新动画</div>
+        <div style="position: relative; height: 40px;">
+          <div style="position: absolute; animation: slideIn 1s ease-out forwards; opacity: 1; color: #16a34a; font-weight: 600;">新价格: 1,442.50</div>
+        </div>
+      </div>
+      <div style="margin-top: 12px; padding: 12px; background: #dcfce7; border-radius: 8px; border-left: 3px solid #22c55e;">
+        <div style="color: #166534; font-size: 13px;">
+          ✓ 数字滚动更新<br>
+          ✓ 新数据滑入效果<br>
+          ✓ 价格闪烁高亮
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C. 数据流动</h3>
+      <p>专注于数据变化的动效，价格更新时数字滚动、新数据滑入，突出信息变化</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>优点</h4><ul><li>信息变化明显</li><li>专业感</li><li>不漏关键数据</li></ul></div>
+        <div class="cons"><h4>缺点</h4><ul><li>开发复杂</li><li>可能干扰</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes slideIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+</style>

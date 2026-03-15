@@ -1,0 +1,141 @@
+<h2>首页布局设计</h2>
+<p class="subtitle">选择首页的信息组织方式</p>
+
+<div class="cards">
+  <!-- 布局A: 卡片网格 -->
+  <div class="card" data-choice="card-grid" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #f8fafc; padding: 12px; min-height: 240px;">
+      <div style="background: #fff; border-radius: 8px; padding: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 8px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px;">
+          <span style="font-size: 11px; font-weight: 600; color: #0f172a;">我的自选股</span>
+          <span style="font-size: 10px; color: #3b82f6;">+添加</span>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+        <div style="background: #fff; border-radius: 6px; padding: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border-left: 3px solid #16a34a;">
+          <div style="font-size: 10px; color: #64748b;">平安银行</div>
+          <div style="font-size: 12px; font-weight: 600; color: #0f172a;">10.94</div>
+          <div style="font-size: 10px; color: #16a34a;">+0.46%</div>
+        </div>
+        <div style="background: #fff; border-radius: 6px; padding: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border-left: 3px solid #dc2626;">
+          <div style="font-size: 10px; color: #64748b;">贵州茅台</div>
+          <div style="font-size: 12px; font-weight: 600; color: #0f172a;">1392</div>
+          <div style="font-size: 10px; color: #dc2626;">-0.57%</div>
+        </div>
+        <div style="background: #fff; border-radius: 6px; padding: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border-left: 3px solid #16a34a;">
+          <div style="font-size: 10px; color: #64748b;">比亚迪</div>
+          <div style="font-size: 12px; font-weight: 600; color: #0f172a;">245.8</div>
+          <div style="font-size: 10px; color: #16a34a;">+1.23%</div>
+        </div>
+        <div style="background: #fff; border-radius: 6px; padding: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border-left: 3px solid #16a34a;">
+          <div style="font-size: 10px; color: #64748b;">宁德时代</div>
+          <div style="font-size: 12px; font-weight: 600; color: #0f172a;">194.8</div>
+          <div style="font-size: 10px; color: #16a34a;">+0.89%</div>
+        </div>
+      </div>
+      <div style="margin-top: 8px; background: #fff; border-radius: 6px; padding: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+        <div style="font-size: 10px; color: #64748b; margin-bottom: 4px;">📊 今日信号</div>
+        <div style="display: flex; gap: 8px;">
+          <span style="font-size: 10px; background: #f0fdf4; color: #16a34a; padding: 2px 6px; border-radius: 4px;">买入 2</span>
+          <span style="font-size: 10px; background: #fef2f2; color: #dc2626; padding: 2px 6px; border-radius: 4px;">卖出 1</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A. 卡片网格</h3>
+      <p>自选股用卡片展示，一屏看多只股票，信号独立模块</p>
+    </div>
+  </div>
+
+  <!-- 布局B: 列表为主 -->
+  <div class="card" data-choice="list-main" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #f8fafc; padding: 12px; min-height: 240px;">
+      <div style="background: #fff; border-radius: 8px; padding: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 8px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px;">
+          <span style="font-size: 11px; font-weight: 600; color: #0f172a;">我的自选股</span>
+          <span style="font-size: 10px; color: #3b82f6;">+添加</span>
+        </div>
+      </div>
+      <div style="background: #fff; border-radius: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px; padding: 6px; border-bottom: 1px solid #f1f5f9; font-size: 9px; color: #94a3b8;">
+          <span>名称</span><span>价格</span><span>涨跌</span><span>信号</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px; padding: 6px; border-bottom: 1px solid #f8fafc; font-size: 10px;">
+          <span style="color: #0f172a;">平安银行</span>
+          <span style="color: #0f172a;">10.94</span>
+          <span style="color: #16a34a;">+0.46%</span>
+          <span style="color: #16a34a;">买★★★★</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px; padding: 6px; border-bottom: 1px solid #f8fafc; font-size: 10px;">
+          <span style="color: #0f172a;">贵州茅台</span>
+          <span style="color: #0f172a;">1392</span>
+          <span style="color: #dc2626;">-0.57%</span>
+          <span style="color: #64748b;">—</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px; padding: 6px; font-size: 10px;">
+          <span style="color: #0f172a;">比亚迪</span>
+          <span style="color: #0f172a;">245.8</span>
+          <span style="color: #16a34a;">+1.23%</span>
+          <span style="color: #dc2626;">卖★★★</span>
+        </div>
+      </div>
+      <div style="margin-top: 8px; display: flex; gap: 4px;">
+        <div style="flex: 1; background: #fff; border-radius: 6px; padding: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); text-align: center;">
+          <div style="font-size: 9px; color: #64748b;">持仓市值</div>
+          <div style="font-size: 12px; font-weight: 600; color: #0f172a;">8.5万</div>
+        </div>
+        <div style="flex: 1; background: #fff; border-radius: 6px; padding: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); text-align: center;">
+          <div style="font-size: 9px; color: #64748b;">今日盈亏</div>
+          <div style="font-size: 12px; font-weight: 600; color: #16a34a;">+320</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B. 列表为主</h3>
+      <p>表格形式，信息密度高，信号直接显示在行内</p>
+    </div>
+  </div>
+
+  <!-- 布局C: 仪表盘式 -->
+  <div class="card" data-choice="dashboard" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #f8fafc; padding: 12px; min-height: 240px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 8px;">
+        <div style="background: #fff; border-radius: 6px; padding: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); text-align: center;">
+          <div style="font-size: 9px; color: #64748b;">总市值</div>
+          <div style="font-size: 14px; font-weight: 600; color: #0f172a;">8.5万</div>
+        </div>
+        <div style="background: #fff; border-radius: 6px; padding: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); text-align: center;">
+          <div style="font-size: 9px; color: #64748b;">今日盈亏</div>
+          <div style="font-size: 14px; font-weight: 600; color: #16a34a;">+320</div>
+        </div>
+        <div style="background: #fff; border-radius: 6px; padding: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); text-align: center;">
+          <div style="font-size: 9px; color: #64748b;">信号数</div>
+          <div style="font-size: 14px; font-weight: 600; color: #3b82f6;">3</div>
+        </div>
+      </div>
+      <div style="background: #fff; border-radius: 6px; padding: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); margin-bottom: 6px;">
+        <div style="font-size: 10px; font-weight: 600; color: #0f172a; margin-bottom: 4px;">🔴 触发提醒</div>
+        <div style="background: #fef2f2; border-radius: 4px; padding: 6px; font-size: 9px;">
+          <span style="color: #dc2626;">平安银行</span> 触及止损线
+        </div>
+      </div>
+      <div style="background: #fff; border-radius: 6px; padding: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); margin-bottom: 6px;">
+        <div style="font-size: 10px; font-weight: 600; color: #0f172a; margin-bottom: 4px;">📈 买入信号</div>
+        <div style="display: flex; gap: 4px;">
+          <div style="flex: 1; background: #f0fdf4; border-radius: 4px; padding: 4px; font-size: 9px;">
+            <div style="color: #16a34a; font-weight: 600;">比亚迪 ★★★★</div>
+            <div style="color: #64748b;">建议价: 245</div>
+          </div>
+        </div>
+      </div>
+      <div style="background: #fff; border-radius: 6px; padding: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+        <div style="font-size: 10px; font-weight: 600; color: #0f172a; margin-bottom: 4px;">📋 自选股</div>
+        <div style="font-size: 9px; color: #64748b;">平安银行 +0.46% | 贵州茅台 -0.57% | 宁德时代 +0.89%</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C. 仪表盘式</h3>
+      <p>顶部数据概览，按优先级展示提醒→信号→自选</p>
+    </div>
+  </div>
+</div>
