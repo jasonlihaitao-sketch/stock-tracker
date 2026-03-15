@@ -4,7 +4,7 @@ import type { Stock, StockDetail } from '@/types/stock'
 import type { ScanResult } from '@/types/scan'
 import type { StrategyId } from '@/types/strategy'
 import type { StockDataContext } from './strategies/types'
-import { getKLineData } from '@/lib/api/stock'
+import { fetchSinaKLine } from '@/lib/api/stock'
 import {
   detectSignalsForStrategies,
   calculateOverallStrength,
@@ -35,9 +35,9 @@ async function buildStockDataContext(stock: Stock): Promise<StockDataContext> {
     prevClose: stock.price - stock.change,
   }
 
-  // 获取K线数据
+  // 获取K线数据（使用服务端直接调用新浪API）
   try {
-    const klineData = await getKLineData(stock.code, 'daily')
+    const klineData = await fetchSinaKLine(stock.code, 'daily')
     if (klineData.length > 0) {
       context.kline = {
         open: klineData.map((d) => d.open),

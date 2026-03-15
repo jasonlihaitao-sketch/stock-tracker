@@ -4,7 +4,13 @@ import Link from 'next/link'
 import { ArrowLeft, Plus, Minus } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { StockChart, MinuteChart, StockDiagnosis, PatternAnalysis } from '@/components/stock'
+import {
+  StockChart,
+  MinuteChart,
+  StockDiagnosis,
+  PatternAnalysis,
+  StockTradeActions,
+} from '@/components/stock'
 import { fetchSinaRealtime } from '@/lib/api/stock'
 import { formatPrice, formatChangePercent, formatVolume, formatAmount, cn } from '@/lib/utils'
 import type { Stock } from '@/types/stock'
@@ -56,7 +62,9 @@ export default async function StockDetailPage({ params }: StockDetailPageProps) 
           <h1 className="text-2xl font-bold">
             {displayCode} {stock.name}
           </h1>
-          <p className="text-muted-foreground">{stock.market === 'SH' ? '上海证券交易所' : '深圳证券交易所'}</p>
+          <p className="text-muted-foreground">
+            {stock.market === 'SH' ? '上海证券交易所' : '深圳证券交易所'}
+          </p>
         </div>
       </div>
 
@@ -67,13 +75,18 @@ export default async function StockDetailPage({ params }: StockDetailPageProps) 
             <div>
               <div className="text-sm text-muted-foreground">现价</div>
               <div className="text-3xl font-bold">{formatPrice(stock.price)}</div>
-              <div className={cn('flex items-center gap-2 mt-1', isUp && 'text-up', isDown && 'text-down')}>
+              <div
+                className={cn(
+                  'mt-1 flex items-center gap-2',
+                  isUp && 'text-up',
+                  isDown && 'text-down'
+                )}
+              >
                 <span className="text-lg">
-                  {stock.change >= 0 ? '+' : ''}{formatPrice(stock.change)}
+                  {stock.change >= 0 ? '+' : ''}
+                  {formatPrice(stock.change)}
                 </span>
-                <span className="text-lg">
-                  {formatChangePercent(stock.changePercent)}
-                </span>
+                <span className="text-lg">{formatChangePercent(stock.changePercent)}</span>
                 {isUp && <Plus className="h-4 w-4" />}
                 {isDown && <Minus className="h-4 w-4" />}
               </div>
@@ -97,6 +110,9 @@ export default async function StockDetailPage({ params }: StockDetailPageProps) 
           </div>
         </CardContent>
       </Card>
+
+      {/* 交易操作 */}
+      <StockTradeActions stock={stock} />
 
       {/* 分时走势图 */}
       <MinuteChart code={stock.code} name={stock.name} />
